@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+<h2>Animaux récents</h2>
+
+{% if animals %}
+<div class="cards">
+    {% for animal in animals %}
+    <div class="card">
+        <h3>{{ animal.nom }}</h3>
+        <p><strong>Espèce :</strong> {{ animal.espece }}</p>
+        <p><strong>Email :</strong> {{ animal.email }}</p>
+        <p><strong>Description :</strong> {{ animal.description[:100] }}...</p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>Aucun animal trouvé.</p>
+{% endif %}
+
+<style>
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+    }
+
+    .card {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        width: 250px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+        margin: 0 0 8px;
+    }
+
+    .card p {
+        margin: 8px 0;
+        font-size: 14px;
+        color: #555;
+    }
+</style>
+{% endblock %}

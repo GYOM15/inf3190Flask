@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+
+{% block title %}Liste des Animaux{% endblock %}
+
+{% block content %}
+<!-- Afficher les messages flash -->
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+            <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endwith %}
+<h2>Liste des Animaux</h2>
+
+<!-- Formulaire de recherche -->
+<form method="GET" action="{{ url_for('animals_routes.list') }}">
+    <label for="query">Rechercher :</label>
+    <input type="text" id="query" name="query" placeholder="Entrez un mot-clé..." value="{{ query }}">
+    <button type="submit">Rechercher</button>
+    {% if query %}
+        <a href="{{ url_for('animals_routes.list') }}">Réinitialiser</a>
+    {% endif %}
+</form>
+
+<!-- Résultats de la liste -->
+{% if animals %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Espèce</th>
+            <th>Race</th>
+            <th>Email</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for animal in animals %}
+        <tr>
+            <td>{{ animal.id }}</td>
+            <td>{{ animal.nom }}</td>
+            <td>{{ animal.espece }}</td>
+            <td>{{ animal.race }}</td>
+            <td>{{ animal.email }}</td>
+            <td>{{ animal.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<div class="pagination">
+    {% if page > 1 %}
+        <a href="{{ url_for('animals_routes.list', page=page-1, query=query) }}">Précédent</a>
+    {% endif %}
+    <span>Page {{ page }} sur {{ total_pages }}</span>
+    {% if page < total_pages %}
+        <a href="{{ url_for('animals_routes.list', page=page+1, query=query) }}">Suivant</a>
+    {% endif %}
+</div>
+{% else %}
+<p>Aucun animal trouvé.</p>
+{% endif %}
+{% endblock %}
