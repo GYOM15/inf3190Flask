@@ -1,10 +1,15 @@
+import logging
 from flask import Flask, render_template, request
 from app.database import Database
 from app.routes.animals_routes import animals_routes
 from app.models import Animals
-import logging
-from logging.handlers import RotatingFileHandler
 
+# Configuration du journal
+logging.basicConfig(
+    filename='app.log',
+    level=logging.INFO,  # Inclut INFO, WARNING, ERROR
+    format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+)
 
 def create_app():
     """
@@ -25,13 +30,10 @@ def create_app():
     def close_db(exception):
         Database.close_connection()
 
-    # Configuration du journal
-    logging.basicConfig(
-        filename='app.log',
-        level=logging.ERROR,
-        format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
-    )
-    
+    # Rediriger les logs de Flask vers logging
+    app.logger.addHandler(logging.StreamHandler())
+    app.logger.setLevel(logging.ERROR)
+
     # Route principale
     @app.route('/')
     def home():
@@ -39,21 +41,22 @@ def create_app():
         Gère la route principale '/'.
         Affiche une liste paginée des animaux.
         """
-        # Récupérer les paramètres de la requête pour la pagination
-        page = request.args.get('page', 1, type=int)  # Par défaut : page 1
-        per_page = request.args.get('per_page', 4, type=int)  # Par défaut : 4 éléments par page
+        try:
+            # Récupérer les paramètres de la requête pour la pagination
+            page = request.args.get('page', 1, type=int)  # Par défaut : page 1
+            per_page = request.args.get('per_page', 4, type=int)  # Par défaut : 4 éléments par page
 
-        # Récupérer les animaux paginés
-        animals = Animals.get_paginated_animals(page=page, per_page=per_page)
+            # Récupérer les animaux paginés
+            animals = Animals.get_paginated_animals(page=page, per_page=per_page)
 
-        # Rendre le template avec les données des animaux
-        return render_template('index.html', animals=animals, page=page, per_page=per_page)
+            # Rendre le template avec les données des animaux
+            return render_template('index.html', animals=animals, page=page, per_page=per_page)
+        except Exception as e:
+            logging.error(f"Erreur dans la route principale : {e}")
+            return render_template('error.html'), 500  # Page d'erreur
 
     return app
 
 
 # Lancement de l'application
 app = create_app()
-
-if __name__ == '__main__':
-    app.run(debug=False)

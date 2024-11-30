@@ -1,6 +1,26 @@
 script_push.sh
 
-# Ignorer les fichiers compilés Python
-__pycache__
+# Environnements virtuels
+.env
+.venv/
+my_env/
+
+# Fichiers générés
+__pycache__/
 *.pyc
 *.pyo
+*.log
+
+# Bases de données locales
+*.db
+
+# Systèmes d'exploitation
+.DS_Store
+Thumbs.db
+
+# Configuration IDE/éditeur
+.vscode/
+.idea/
+
+# Fichiers sensibles
+*.env
