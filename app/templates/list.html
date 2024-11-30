@@ -1,22 +1,23 @@
 {% extends 'layout.html' %}
 
-{% block title %}Liste des Animaux{% endblock %}
+{% block title %}Mon Gestionnaire d’Animaux - Liste des Animaux{% endblock %}
 
 {% block content %}
 <!-- Afficher les messages flash -->
 {% with messages = get_flashed_messages(with_categories=True) %}
-{% if messages %}
+    {% if messages %}
     <div class="flash-messages">
         {% for category, message in messages %}
-            <p class="{{ category }}">{{ message }}</p>
+        <p class="flash-message {{ category }}">{{ message }}</p>
         {% endfor %}
     </div>
-{% endif %}
+    {% endif %}
 {% endwith %}
+
 <h2>Liste des Animaux</h2>
 
 <!-- Formulaire de recherche -->
-<form method="GET" action="{{ url_for('animals_routes.list') }}">
+<form method="GET" class="champ-recherche" action="{{ url_for('animals_routes.list') }}">
     <label for="query">Rechercher :</label>
     <input type="text" id="query" name="query" placeholder="Entrez un mot-clé..." value="{{ query }}">
     <button type="submit">Rechercher</button>
@@ -24,6 +25,9 @@
         <a href="{{ url_for('animals_routes.list') }}">Réinitialiser</a>
     {% endif %}
 </form>
+
+<!-- Lien vers le panneau d'administration -->
+<a class="lien-panel-admin" href="{{ url_for('animals_routes.admin_panel') }}">Panneau d'Administration</a>
 
 <!-- Résultats de la liste -->
 {% if animals %}
@@ -41,12 +45,12 @@
     <tbody>
         {% for animal in animals %}
         <tr>
-            <td>{{ animal.id }}</td>
-            <td>{{ animal.nom }}</td>
-            <td>{{ animal.espece }}</td>
-            <td>{{ animal.race }}</td>
-            <td>{{ animal.email }}</td>
-            <td>{{ animal.description }}</td>
+            <td>{{ animal['id'] }}</td>
+            <td>{{ animal['nom'] }}</td>
+            <td>{{ animal['espece'] }}</td>
+            <td>{{ animal['race'] }}</td>
+            <td>{{ animal['email'] }}</td>
+            <td>{{ animal['description'] }}</td>
         </tr>
         {% endfor %}
     </tbody>

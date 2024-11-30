@@ -4,38 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Titre par défaut{% endblock %}</title>
-    <style>
-        /* Ajoutez ici des styles globaux */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
-        }
-
-        header, footer {
-            text-align: center;
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-        }
-
-        .flash-messages{
-            background: green;
-            height: 30px;
-            padding: 10px;
-            color: white;
-            width: 20%;
-        }
-
-        footer {
-            font-size: 0.9em;
-        }
-    </style>
+    <link rel="stylesheet" href="{{url_for("static", filename='css/style.css')}} ">
 </head>
+
 <body>
     <header>
-        <h1>Mon Application Flask</h1>
+        <a href="/"><h1>Mon Gestionnaire d’Animaux</h1></a>
         <nav>
             <a href="{{ url_for('animals_routes.register') }}">Ajouter un Animal</a> |
             <a href="{{ url_for('animals_routes.list') }}">Liste des Animaux</a>
@@ -51,5 +25,8 @@
     <footer>
         &copy; 2024 Mon Application Flask. Tous droits réservés.
     </footer>
+
+    <script src="{{ url_for('static', filename='scripts/admin.js') }}"></script>
+
 </body>
 </html>

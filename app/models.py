@@ -26,20 +26,21 @@ class Animals:
         db = Database.get_connection()
         cursor = db.cursor()
         try:
-            cursor.execute(
-                """
-                INSERT INTO animals (nom, espece, race, age, description, email, adresse, ville, code_postal)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                (nom, espece, race, age, description, email, adresse, ville, code_postal)
-            )
+            query = """
+            INSERT INTO animals (nom, espece, race, age, description, email, adresse, ville, code_postal)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """
+            params = (nom, espece, race, age, description, email, adresse, ville, code_postal)
+            logging.debug(f"Executing query: {query} with params: {params}")
+            cursor.execute(query, params)
             db.commit()
-            logging.error("Animal ajouté avec succès.")
+            logging.info("Animal ajouté avec succès.")
         except Exception as e:
             logging.error(f"Erreur lors de l'ajout : {e}")
         finally:
             cursor.close()
 
+    
 
     """
         Méthode statique pour rechercher un animal par son email.
@@ -56,8 +57,29 @@ class Animals:
                 return dict(row)  # Retourne un dictionnaire au lieu d'une instance ou None
             return None
         except Exception as e:
-            logging.error (f"Erreur lors de la recherche, si cela persite réesayer plutard ! : {e}")
-            return {"error": f"Erreur lors de la recherche, si cela persite réesayer plutard ! : {e}"}
+            logging.error (f"Erreur lors de la recherche : {e}")
+            return {"error": f"Erreur lors de la recherche : {e}"}
+        finally:
+            cursor.close()
+
+
+    """Retrouver un animal par son id"""
+    @staticmethod
+    def find_by_id(animal_id):
+        """
+        Récupère un animal par son ID.
+        """
+        db = Database.get_connection()
+        cursor = db.cursor()
+        try:
+            cursor.execute("SELECT * FROM animals WHERE id = ?", (animal_id,))
+            row = cursor.fetchone()
+            if row:
+                return dict(row)  # Convertir la ligne en dictionnaire
+            return None
+        except Exception as e:
+            logging.error(f"Erreur lors de la récupération de l'animal avec ID {animal_id} : {e}")
+            return None
         finally:
             cursor.close()
 
