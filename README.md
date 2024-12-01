@@ -211,6 +211,6 @@ Ces commandes permettent de supprimer tous les dossiers `__pycache__` de votre p
 ---
 ## **Licence Académique**
    - Ce projet a été réalisé dans le cadre du TP3 du cours **INF3190 – Introduction à la programmation web (Automne 2024)**. Il est destiné à un usage académique et pédagogique uniquement.
-   - Toute réutilisation ou redistribution doit être conforme aux règlements académiques en vigueur. Les travaux soumis doivent être le résultat du travail personnel des étudiants. La copie ou le plagiat de ce projet peut entraîner des sanctions disciplinaires conformément au règlement de l'université.
+   - Toute réutilisation ou redistribution doit être conforme aux règlements académiques en vigueur. 
 ---
 
