@@ -205,7 +205,9 @@ Get-ChildItem -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -
 ```cmd
 for /d /r . %d in (__pycache__) do @if exist "%d" rd /s /q "%d"
 ```
-**Ces commandes permettent de supprimer tous les dossiers `__pycache__` de votre projet avant de faire un commit ou un push.**
+
+Ces commandes permettent de supprimer tous les dossiers `__pycache__` de votre projet avant de faire un commit ou un push.
+
 ---
 ## **Licence Académique**
    - Ce projet a été réalisé dans le cadre du TP3 du cours **INF3190 – Introduction à la programmation web (Automne 2024)**. Il est destiné à un usage académique et pédagogique uniquement.
