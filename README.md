@@ -72,6 +72,7 @@ La base de données SQLite contient une table `animals` avec les colonnes suivan
 - **Python 3.12+**
 - **Flask 3.0+**
 
+
 ---
 
 # Structure du Projet INF3190FLASK
@@ -127,6 +128,45 @@ INF3190FLASK/
    ```
    L'application sera accessible à l'adresse [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
+## **Problème : Le Module Flask n'est pas Reconnu**
+
+Si vous rencontrez une erreur indiquant que le module Flask n'est pas reconnu dans votre projet, suivez ces étapes pour résoudre le problème en configurant l'interpréteur Python correct :
+
+### **Étapes pour Configurer l'Interpréteur Python :**
+
+1. **Ouvrir la Palette de Commandes :**
+   - Appuyez sur `Command + Shift + P` (macOS) ou `Ctrl + Shift + P` (Linux/Windows).
+
+2. **Rechercher l'Interpréteur :**
+   - Tapez `Python: Select Interpreter` dans la barre de recherche.
+
+3. **Choisir l'Environnement Virtuel :**
+   - Dans la liste des interpréteurs disponibles, sélectionnez celui correspondant à l'environnement virtuel de votre projet (ex. : `INF3190FLASK/.venv/bin/python` ou similaire).
+
+4. **Vérifier que Flask est Installé :**
+   - Une fois l'interpréteur sélectionné, assurez-vous que le module Flask est installé :
+     ```bash
+     pip show flask
+     ```
+   - Si Flask n'est pas installé, utilisez la commande suivante :
+     ```bash
+     pip install flask
+     ```
+
+### **Remarques pour macOS/Linux et Windows :**
+
+- **Pour macOS/Linux :**
+  - Si l'interpréteur n'est pas listé automatiquement, vous pouvez naviguer manuellement jusqu'à votre environnement virtuel (`env/bin/python`).
+
+- **Pour Windows :**
+  - Naviguez manuellement jusqu'au fichier `env\Scripts\python.exe` si nécessaire.
+
+---
+
+### **Redémarrer l'Environnement**
+
+Après avoir configuré l'interpréteur, redémarrez Visual Studio Code pour appliquer les modifications.
+
 ---
 
 ## **Fonctionnalités Clés**
@@ -155,28 +195,21 @@ Pour éviter de pousser accidentellement les dossiers `__pycache__` dans votre d
 #### Sous Linux/MacOS :
 ```bash
 find . -type d -name "__pycache__" -exec rm -rf {} +
-```
 
+```
 #### Sous Windows (PowerShell) :
 ```powershell
 Get-ChildItem -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
 ```
-
 #### Sous Windows (CMD) :
 ```cmd
 for /d /r . %d in (__pycache__) do @if exist "%d" rd /s /q "%d"
 ```
-
 Ces commandes permettent de supprimer tous les dossiers `__pycache__` de votre projet avant de faire un commit ou un push.
-
 ---
-
 ## **Licence Académique**
-
 Ce projet a été réalisé dans le cadre du TP3 du cours **INF3190 – Introduction à la programmation web (Automne 2024)**. Il est destiné à un usage académique et pédagogique uniquement.
-
 Toute réutilisation ou redistribution doit être conforme aux règlements académiques en vigueur. Les travaux soumis doivent être le résultat du travail personnel des étudiants. La copie ou le plagiat de ce projet peut entraîner des sanctions disciplinaires conformément au règlement de l'université.
-
 ---
 
 """
